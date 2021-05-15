@@ -1,10 +1,10 @@
 package com.example;
 
 import com.example.Flight.Flight;
+import com.example.Flight.SearchTicket;
 import com.example.Person.Person;
 import com.example.Ticket.Ticket;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 @RestController
 public class FlightController {
@@ -53,4 +54,17 @@ public class FlightController {
         return Arrays.asList(flight, flight2);
     }
 
+    @PostMapping("/tickets/search")
+    public List<Ticket> getTickets(@RequestBody SearchTicket searchTicket) {
+        Ticket ticket= new Ticket(200, new Person("Mora A", "Some other name"));
+        Ticket ticket2= new Ticket(300, new Person("Matt B", null));
+        Ticket ticket3= new Ticket(400, new Person("Maria", "D"));
+        Flight flight =  new Flight();
+        flight.setTickets(Arrays.asList(ticket, ticket2, ticket3));
+        return flight.getTickets().stream()
+                .filter( t-> t.getPrice()<= searchTicket.getPrice() && t.getPassenger().getFirstName().contains(searchTicket.getName()))
+                .sorted( (t1, t2) -> t1.getPassenger().getFirstName().compareTo(t2.getPassenger().getFirstName()))
+                .collect(Collectors.toList());
+
+    }
 }
