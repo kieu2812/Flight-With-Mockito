@@ -7,7 +7,7 @@ public class Ticket {
     private int price;
     private Person passenger;
 
-    @JsonGetter("Price")
+  //  @JsonGetter("Price")
     public int getPrice() {
         return price;
     }
@@ -16,7 +16,7 @@ public class Ticket {
         this.price = price;
     }
 
-    @JsonGetter("Passenger")
+ //   @JsonGetter("Passenger")
     public Person getPassenger() {
         return passenger;
     }

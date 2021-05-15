@@ -14,7 +14,7 @@ public class Flight {
 
     private List<Ticket> tickets;
 
-    @JsonGetter("Departs")
+   // @JsonGetter("Departs")
     public Date getDeparts() {
         return departs;
     }
@@ -22,7 +22,7 @@ public class Flight {
     public void setDeparts(Date departs) {
         this.departs = departs;
     }
-    @JsonGetter("Tickets")
+  //  @JsonGetter("Tickets")
     public List<Ticket> getTickets() {
         return tickets;
     }

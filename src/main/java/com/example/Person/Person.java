@@ -10,7 +10,7 @@ public class Person {
     private String firstName;
     private String lastName;
 
-    @JsonGetter("FirstName")
+  //  @JsonGetter("FirstName")
     public String getFirstName() {
         return firstName;
     }
@@ -19,7 +19,7 @@ public class Person {
         this.firstName = firstName;
     }
 
-    @JsonGetter("LastName")
+  //  @JsonGetter("LastName")
     public String getLastName() {
         return lastName;
     }
