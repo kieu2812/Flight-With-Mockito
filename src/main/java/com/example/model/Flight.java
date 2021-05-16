@@ -1,12 +1,9 @@
-package com.example.Flight;
+package com.example.model;
 
-import com.example.Ticket.Ticket;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonGetter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.logging.FileHandler;
 
 public class Flight {
     @JsonFormat(pattern ="yyyy-MM-dd HH:mm")

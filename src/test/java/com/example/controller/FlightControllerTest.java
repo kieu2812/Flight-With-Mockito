@@ -1,6 +1,7 @@
-package com.example;
+package com.example.controller;
 
-import com.example.Flight.SearchTicket;
+import com.example.request.SearchTicketRequest;
+import com.example.controller.FlightController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +10,18 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.TimeZone;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(FlightController.class)
 public class FlightControllerTest {
@@ -57,7 +61,7 @@ public class FlightControllerTest {
     @Test
     public void testGetTicketsByObjectMapper() throws Exception {
 
-        SearchTicket searchTicket =  new SearchTicket(300, "M");
+        SearchTicketRequest searchTicket =  new SearchTicketRequest(300, "M");
         String jsonSearchTicket = new ObjectMapper().writeValueAsString(searchTicket);
 
         RequestBuilder request = post("/tickets/search")
@@ -89,4 +93,25 @@ public class FlightControllerTest {
                 .andExpect(jsonPath("$[1].Passenger.FirstName", is("Mora A")))
                 .andExpect(jsonPath("$[0].Passenger.FirstName", is("Matt B")));
     }
+    @Test
+    public void testRawBody() throws Exception {
+        String json = getJSON("src/test/resources/data.json");
+        System.out.println("JSON from file "+ json);
+        RequestBuilder request = post("/tickets/search")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[1].Price", is(200)))
+                .andExpect(jsonPath("$[0].Price", is(300)))
+                .andExpect(jsonPath("$[1].Passenger.FirstName", is("Mora A")))
+                .andExpect(jsonPath("$[0].Passenger.FirstName", is("Matt B")));
+    }
+
+
+    private String getJSON(String filePath) throws Exception {
+        Path path = Paths.get(filePath);
+        return new String(Files.readAllBytes(path));
+    }
+
 }

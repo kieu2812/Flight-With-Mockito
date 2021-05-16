@@ -1,7 +1,7 @@
-package com.example.Ticket;
+package com.example.model;
 
-import com.example.Person.Person;
-import com.fasterxml.jackson.annotation.JsonGetter;
+import com.example.model.Person;
+
 
 public class Ticket {
     private int price;
@@ -29,5 +29,14 @@ public class Ticket {
     public Ticket(int price, Person passenger) {
         this.price = price;
         this.passenger = passenger;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "price=" + price +
+                ", passenger=" + passenger +
+                '}';
     }
 }

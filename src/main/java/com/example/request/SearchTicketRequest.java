@@ -1,6 +1,6 @@
-package com.example.Flight;
+package com.example.request;
 
-public class SearchTicket {
+public class SearchTicketRequest {
     private int price;
     private String name;
 
@@ -20,7 +20,7 @@ public class SearchTicket {
         this.name = name;
     }
 
-    public SearchTicket(int price, String name) {
+    public SearchTicketRequest(int price, String name) {
         this.price = price;
         this.name = name;
     }
